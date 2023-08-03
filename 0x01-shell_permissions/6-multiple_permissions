@@ -1,3 +1,2 @@
 #!/bin/bash
-chmod ug+x hello
-chmod o+r hello
+find -name hello -exec chmod ug+x {} + -o -exec chmod o+r {} +
