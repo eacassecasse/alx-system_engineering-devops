@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -name "*.gifs" -type f -execdir basename -s '.gifs' {} +
