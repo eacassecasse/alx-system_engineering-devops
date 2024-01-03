@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # Display lines containing the bash word
 # shellcheck disable=SC2009
 
 ps -auxf | grep bash 
+=======
+# Displays a list of currently running processes containing the bash keyword.
+# shellcheck disable=SC2009
+
+ps -aux | grep bash
+>>>>>>> f800ab523ca0f670753a107613ade70194bb7720

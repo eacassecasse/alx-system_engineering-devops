@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
+=======
+# Displays a list of currently running processes.
+#   Shows all processes, for all users, including those
+#+  which might not have a TTY.
+
+>>>>>>> f800ab523ca0f670753a107613ade70194bb7720
 ps -auxf

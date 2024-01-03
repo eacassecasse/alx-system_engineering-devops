@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
+=======
+# Displays its own PID.
+
+>>>>>>> f800ab523ca0f670753a107613ade70194bb7720
 echo $$
