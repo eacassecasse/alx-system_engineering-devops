@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-# Contains teh answer for the forth task
-echo 1
-echo 2
-echo 1
+1
+2
+1
 
