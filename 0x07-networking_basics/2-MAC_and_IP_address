@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Contains teh answer for the third task
+echo 2
+echo 1
+
