@@ -1,0 +1,4 @@
+# Shares ssh configuration with no password auth
+Host *
+      PasswordAuthentication no
+      IdentifyFile ~/.ssh/school
