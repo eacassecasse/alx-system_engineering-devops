@@ -1,0 +1,1 @@
+This folder contains all the answers for processes and signals task.
