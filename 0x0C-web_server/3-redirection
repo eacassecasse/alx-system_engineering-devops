@@ -24,6 +24,8 @@ server {
 
 echo "$SERVER_CONFIG" | sudo tee /etc/nginx/sites-enabled/default
 
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
 if [ "$(pgrep -c nginx)" -le 0 ]; then
     sudo service nginx start
 else
