@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs and setup haproxy load balancer
 
-apt-get install -y --no-install-recommends software-properties-common
+apt-get install -y software-properties-common
 add-apt-repository -y ppa:vbernat/haproxy-2.8
 apt-get -y update
 apt-get install -y haproxy=2.8.\*
@@ -20,12 +20,4 @@ echo "
    server 512247-web-02 100.25.134.41:80 check
 " >> /etc/haproxy/haproxy.cfg
 
-if [ "$(pgrep -c haproxy)" -le 0 ]; then
-	sudo service haproxy start
-else
-	sudo service haproxy restart
-fi
-
-echo -e "web-01 web-02"
-echo "web-01"
-echo "web-02"
+service haproxy start
