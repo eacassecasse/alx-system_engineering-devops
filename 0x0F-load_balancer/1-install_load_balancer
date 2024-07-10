@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Installs and setup haproxy load balancer
 
-apt-get install -y software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-2.8
+# apt-get install -y software-properties-common
+# add-apt-repository -y ppa:vbernat/haproxy-2.8
 apt-get -y update
-apt-get install -y haproxy=2.8.\*
+# apt-get install -y haproxy=2.8.\*
+apt-get install -y haproxy
 
 echo "ENABLED=1" > /etc/default/haproxy
 
@@ -16,8 +17,8 @@ cfg_block="
    balance roundrobin
    option httpclose
    option forwardfor
-   server web-01 54.157.136.194:80 check
-   server web-02 100.25.134.41:80 check
+   server 512247-web-01 54.157.136.194:80 check
+   server 512247-web-02 100.25.134.41:80 check
 "
 
 
@@ -27,4 +28,4 @@ else
 	echo "Configuration already added previously. Skipping..."
 fi
 
-service haproxy start
+service haproxy restart
