@@ -1,23 +1,31 @@
 #!/usr/bin/env bash
 # Installs and setup haproxy load balancer
 
-apt-get install -y software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-1.8
+# apt-get install -y software-properties-common
+# add-apt-repository -y ppa:vbernat/haproxy-2.8
 apt-get -y update
-apt-get install -y haproxy=1.8.\*
+# apt-get install -y haproxy=2.8.\*
+apt-get install -y haproxy
 
 echo "ENABLED=1" > /etc/default/haproxy
 
 # Listen to web1 and web2 servers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-echo "
+cfg_block="
    listen load_balancer
    bind *:80
    mode http
    balance roundrobin
    option httpclose
    option forwardfor
-   server 512247-web-01 18.207.141.6:80 check
-   server 512247-web-02 18.210.33.217:80 check
-" >> /etc/haproxy/haproxy.cfg
+   server 512247-web-01 54.157.136.194:80 check
+   server 512247-web-02 100.25.134.41:80 check
+"
 
-service haproxy start
+
+if ! grep -q "listen load_balancer" /etc/haproxy/haproxy.cfg; then
+	echo "$cfg_block" >> /etc/haproxy/haproxy.cfg
+else
+	echo "Configuration already added previously. Skipping..."
+fi
+
+service haproxy restart
