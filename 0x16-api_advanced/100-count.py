@@ -14,7 +14,7 @@ def count_words(subreddit, word_list, instances={}, after="", count=0):
         count (int): Total number of results matched so far.
     """
     # Construct the URL for Reddit API
-    url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {"User-Agent": "MyRedditClient/1.0"}
     params = {"after": after, "count": count, "limit": 100}
 
@@ -23,14 +23,28 @@ def count_words(subreddit, word_list, instances={}, after="", count=0):
                             allow_redirects=False)
 
     # Check for valid response
-    try:
-        response.raise_for_status()
-    except requests.HTTPError:
-        print("Error: Unable to retrieve data from Reddit API")
-        return
+    #try:
+    #    response.raise_for_status()
+    #except requests.HTTPError:
+    #    print("Error: Unable to retrieve data from Reddit API")
+    #    return
 
     # Extract relevant data from the response JSON
-    results = response.json().get("data")
+    #results = response.json().get("data")
+
+    if response.status_code != 200:
+        return
+
+    try:
+        results = response.json().get("data")
+    except ValueError:
+        print("Error: Response could not be decoded as JSON")
+        return
+
+    if not results:
+        print("No data returned from Reddit API.")
+        return
+
     after = results.get("after")
     count += results.get("dist")
 

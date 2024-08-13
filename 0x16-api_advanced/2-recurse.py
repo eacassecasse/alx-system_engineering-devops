@@ -19,7 +19,7 @@ def recurse(subreddit, hot_list=[], after="", count=0):
         list: A list containing the titles of all hot posts on the subreddit.
     """
     # Construct the URL for the subreddit's hot posts API endpoint
-    url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
 
     # Set custom User-Agent header to avoid 429 Too Many Requests error
     headers = {
