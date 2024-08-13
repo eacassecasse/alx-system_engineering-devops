@@ -6,20 +6,17 @@ import requests
 
 def recurse(subreddit, hot_list=[], after="", count=0):
     """
-    Retrieve a list of titles of all hot posts on a given subreddit.
+    Retrieve a list of titles of all hot posts on a given subreddit
+    recursively.
 
     Args:
         subreddit (str): The name of the subreddit to query.
-        hot_list (list): A list to store the titles of hot posts (default is an empty list).
-        after (str): The ID of the last post in the previous request (default is an empty string).
-        count (int): The count of posts retrieved so far (default is 0).
+        hot_list (list): List of hot posts titles.
+        after (str): The ID of the last post in the previous request.
+        count (int): The count of posts retrieved so far.
 
     Returns:
         list: A list containing the titles of all hot posts on the subreddit.
-
-    Note:
-        Reddit API limits the number of posts per request to 100.
-        To retrieve more posts, the function makes recursive requests until all posts are fetched.
     """
     # Construct the URL for the subreddit's hot posts API endpoint
     url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
