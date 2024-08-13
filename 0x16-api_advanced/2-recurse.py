@@ -34,14 +34,23 @@ def recurse(subreddit, hot_list=[], after="", count=0):
     }
 
     # Send a GET request to the Reddit API
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers, params=params,
+                            allow_redirects=False)
 
     # Check if the subreddit exists
-    if response.status_code == 404:
+    if response.status_code != 200:
         return None
 
     # Parse the JSON response to extract post data
-    data = response.json().get("data")
+    # data = response.json().get("data")
+
+    try:
+        data = response.json().get("data")
+        if not data:
+            return None
+    except ValueError:
+        return None
+
     after = data.get("after")
     count += data.get("dist")
     for child in data.get("children"):
