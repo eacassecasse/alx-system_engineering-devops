@@ -24,14 +24,18 @@ def number_of_subscribers(subreddit):
     }
 
     # Send a GET request to the Reddit API
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     # Check if the subreddit exists
-    if response.status_code == 404:
+    if response.status_code != 200:
         return 0
 
     # Parse the JSON response to extract the number of subscribers
-    subreddit_info = response.json().get("data")
-    num_subscribers = subreddit_info.get("subscribers")
 
-    return num_subscribers
+    try:
+        subreddit_info = response.json().get("data")
+        if subreddit_info is None:
+            return 0
+        return subreddit_info.get("subscribers")
+    except ValueError:
+        return 0
