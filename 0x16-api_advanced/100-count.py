@@ -23,14 +23,14 @@ def count_words(subreddit, word_list, instances={}, after="", count=0):
                             allow_redirects=False)
 
     # Check for valid response
-    #try:
+    # try:
     #    response.raise_for_status()
-    #except requests.HTTPError:
+    # except requests.HTTPError:
     #    print("Error: Unable to retrieve data from Reddit API")
     #    return
 
     # Extract relevant data from the response JSON
-    #results = response.json().get("data")
+    # results = response.json().get("data")
 
     if response.status_code != 200:
         return
