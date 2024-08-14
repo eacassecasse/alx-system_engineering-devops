@@ -49,9 +49,13 @@ def top_ten(subreddit):
         if not posts:
             print(None)
             return
-
+        count = 0
         for post in posts:
-            title = post.get("data").get("title")
-            print(title)
+            if not post.get("data").get("stickied"):
+                title = post.get("data").get("title")
+                print(title)
+                count += 1
+                if count == 10:
+                    break
     except ValueError:
         print("None")
