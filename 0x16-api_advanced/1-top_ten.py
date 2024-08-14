@@ -15,12 +15,14 @@ def top_ten(subreddit):
     Returns:
         None
     """
+    if subreddit is None or not isinstance(subreddit, str):
+        print("None")
     # Construct the URL for the subreddit's hot posts API endpoint
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
 
     # Set custom User-Agent header to avoid 429 Too Many Requests error
     headers = {
-        "User-Agent": "MyRedditClient/1.0"
+        "User-agent": "MyRedditClient/1.0"
     }
 
     # Set query parameters to limit the number of posts to 10
@@ -29,17 +31,13 @@ def top_ten(subreddit):
     }
 
     # Send a GET request to the Reddit API
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
+    response = requests.get(url, headers=headers, params=params)
+    results = response.json()
 
-    # Check if the subreddit exists
-    if response.status_code == 200:
-        data = response.json().get('data')
+    try:
+        posts = results.get('data').get("children")
 
-        posts = data.get('children')
-        
         for post in posts:
-            title = post.get("data").get("title")
-            print(title)
-    else:
+            print(post.get("data").get("title"))
+    except (Exception):
         print(None)
