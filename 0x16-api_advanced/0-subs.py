@@ -15,6 +15,10 @@ def number_of_subscribers(subreddit):
         int: The total number of subscribers on the subreddit.
              Returns 0 if the subreddit does not exist or if there is an error.
     """
+
+    if type(subreddit) != str:
+        return 0
+
     # Construct the URL for the subreddit information API endpoint
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
 
@@ -23,11 +27,9 @@ def number_of_subscribers(subreddit):
         "User-agent": "MyRedditClient/1.0"
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    results = response.json()
+    if response.status_code in [302, 404]:
+        return 0
 
-    try:
-        return results.get("data").get("subscribers")
-    except (Exception):
-        return (0)
+    return response.json().get("data").get("subscribers")

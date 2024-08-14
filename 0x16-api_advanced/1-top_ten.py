@@ -15,8 +15,9 @@ def top_ten(subreddit):
     Returns:
         None
     """
-    if subreddit is None or not isinstance(subreddit, str):
+    if type(subreddit) != str:
         print("None")
+        return
     # Construct the URL for the subreddit's hot posts API endpoint
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
 
@@ -31,13 +32,16 @@ def top_ten(subreddit):
     }
 
     # Send a GET request to the Reddit API
-    response = requests.get(url, headers=headers, params=params)
-    results = response.json()
+    response = requests.get(url, headers=headers, params=params,
+                            allow_redirects=False)
+
+    if response.status_code in [302, 404]:
+        print('None')
+        return
 
     try:
-        posts = results.get('data').get("children")
-
-        for post in posts:
-            print(post.get("data").get("title"))
-    except (Exception):
-        print(None)
+        data = response.json().get("data")
+        for post in data.get("children"):
+            print(post.get('data').get('title'))
+    except requests.JSONDecodeError:
+        print('None')
