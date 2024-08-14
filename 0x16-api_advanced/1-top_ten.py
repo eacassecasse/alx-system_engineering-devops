@@ -33,29 +33,13 @@ def top_ten(subreddit):
                             allow_redirects=False)
 
     # Check if the subreddit exists
-    if response.status_code != 200:
-        print("None")
-        return
+    if response.status_code == 200:
+        data = response.json().get('data')
 
-    # Parse the JSON response to extract the titles of the top 10 hot posts
-    try:
-        # Parse the JSON response to extract the titles of the top 10 hot posts
-        data = response.json().get("data")
-        if data is None:
-            print(None)
-            return
-
-        posts = data.get("children")
-        if not posts:
-            print(None)
-            return
-        count = 0
+        posts = data.get('children')
+        
         for post in posts:
-            if not post.get("data").get("stickied"):
-                title = post.get("data").get("title")
-                print(title)
-                count += 1
-                if count == 10:
-                    break
-    except ValueError:
-        print("None")
+            title = post.get("data").get("title")
+            print(title)
+    else:
+        print(None)
