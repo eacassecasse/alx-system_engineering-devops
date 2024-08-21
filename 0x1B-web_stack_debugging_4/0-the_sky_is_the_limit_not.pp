@@ -1,12 +1,13 @@
-# Fixing huge amount of requests failure
+# Use the exec resource to update or add the ULIMIT variable in /etc/default/nginx
 
-exec {'increase_amount_of_resources':
-  provider => shell,
-  command  => 'sudo sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/" /etc/default/nginx',
-  before   => Exec['reboot_server'],
+exec { 'replace_ulimit':
+  command => 'sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/" /etc/default/nginx',
+  path    => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+  before  => Exec['restart_nginx'],
 }
 
-exec {'reboot_server':
-  provider => shell,
-  command  => 'sudo service nginx restart',
+exec { 'restart_nginx':
+  command     => 'service nginx restart',
+  path        => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+  refreshonly => true,  # This ensures that the restart happens only if triggered
 }

@@ -1,12 +1,12 @@
-# Fixing huge amount of requests failure
+# Use the exec resource to updates the user limits in /etc/security/limits.conf
 
-exec {'increase_amount_of_opened_files_5000':
-  provider => shell,
-  command  => 'sudo sed -i "s/nofile 5/nofile 50000/" /etc/security/limits.conf',
-  before   => Exec['increase_amount_of_opened_files_4000'],
+exec { 'replace-nofile-soft':
+  command  => 'sed -i "s/nofile 5/nofile 50000/" /etc/security/limits.conf',
+  path     => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+  before   => Exec['replace-nofile-hard'],
 }
 
-exec {'increase_amount_of_opened_files_4000':
-  provider => shell,
-  command  => 'sudo sed -i "s/nofile 4/nofile 40000/" /etc/security/limits.conf',
+exec { 'replace-nofile-hard':
+  command  => 'sed -i "s/nofile 4/nofile 40000/" /etc/security/limits.conf',
+  path     => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
 }
